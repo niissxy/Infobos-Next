@@ -1,43 +1,40 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/v1/(.*)",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/api/v1/$1"
+      "source": "/api/v1/:path*",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/api/v1/:path*"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/api/:path*"
     },
     {
-      "src": "/sitemap.xml",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/sitemap.xml"
+      "source": "/sitemap.xml",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/sitemap.xml"
     },
     {
-      "src": "/news-sitemap.xml",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/news-sitemap.xml"
+      "source": "/news-sitemap.xml",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/news-sitemap.xml"
     },
     {
-      "src": "/rss.xml",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/rss.xml"
+      "source": "/rss.xml",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/rss.xml"
     },
     {
-      "src": "/category-sitemap.xml",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/category-sitemap.xml"
+      "source": "/category-sitemap.xml",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/category-sitemap.xml"
     },
     {
-      "src": "/image-sitemap.xml",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/image-sitemap.xml"
+      "source": "/image-sitemap.xml",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/image-sitemap.xml"
     },
     {
-      "src": "/video-sitemap.xml",
-      "dest": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/video-sitemap.xml"
+      "source": "/video-sitemap.xml",
+      "destination": "https://ais-pre-dzoq75smn4uqxafxcoo6qy-266988239665.asia-southeast1.run.app/video-sitemap.xml"
     },
-    { "handle": "filesystem" },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!api|sitemap|news-sitemap|rss|category-sitemap|image-sitemap|video-sitemap|assets|.*\\.).*)",
+      "destination": "/index.html"
     }
   ]
 }
