@@ -5,7 +5,7 @@ import { IntelligenceService } from './intelligence.service';
 export class IngestionService {
   /**
    * Calculates word-level Jaccard Similarity between two titles
-   * to determine if they represent duplicate reports.
+   * To determine if they represent duplicate reports.
    */
   public static calculateSimilarity(t1: string, t2: string): number {
     const s1 = new Set(t1.toLowerCase().replace(/[^a-zA-Z0-9\s]/g, '').split(/\s+/).filter(Boolean));
