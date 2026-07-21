@@ -203,12 +203,10 @@ function AppContent() {
 
   // 1. Parse initial path and setup routing
   useEffect(() => {
-    if (window.location.hash === '#premium' || window.location.hash.startsWith('#premium')) {
+    if (window.location.hash === '#premium' || window.location.hash.startsWith('#premium') || window.location.hash === '#research' || window.location.hash.startsWith('#research')) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
-    if (window.location.pathname === '/' && !window.location.hash) {
-      window.location.hash = '#research';
-    }
+
     initializeSystemData();
     const path = window.location.pathname;
     
