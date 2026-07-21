@@ -63,7 +63,7 @@ export default function AdZone({ zone, pageContext }: AdZoneProps) {
         title: 'Laporan Riset Geopolitik 2026',
         subtitle: 'Kajian mendalam dampak ekonomi digital dan regulasi investasi Jawa Barat.',
         cta: 'Baca Publikasi Riset',
-        link: '#research',
+        link: '/',
         badge: 'Riset Eksklusif',
         icon: BookOpen,
         color: 'from-slate-800 to-slate-950',

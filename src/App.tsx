@@ -206,6 +206,9 @@ function AppContent() {
     if (window.location.hash === '#premium' || window.location.hash.startsWith('#premium')) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
+    if (window.location.pathname === '/' && !window.location.hash) {
+      window.location.hash = '#research';
+    }
     initializeSystemData();
     const path = window.location.pathname;
     
