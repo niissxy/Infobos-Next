@@ -203,9 +203,25 @@ function AppContent() {
 
   // 1. Parse initial path and setup routing
   useEffect(() => {
-    if (window.location.hash === '#premium' || window.location.hash.startsWith('#premium') || window.location.hash === '#research' || window.location.hash.startsWith('#research')) {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
+    const clearHashes = () => {
+      const hash = window.location.hash;
+      if (
+        hash === '#premium' || 
+        hash.startsWith('#premium') || 
+        hash === '#research' || 
+        hash.startsWith('#research') || 
+        hash === '#/research' || 
+        hash === '#/premium'
+      ) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    };
+
+    // Run immediately on mount
+    clearHashes();
+
+    // Run on hash change
+    window.addEventListener('hashchange', clearHashes);
 
     initializeSystemData();
     const path = window.location.pathname;
@@ -249,6 +265,10 @@ function AppContent() {
         setCurrentTab(tab);
       }
     }
+
+    return () => {
+      window.removeEventListener('hashchange', clearHashes);
+    };
   }, []);
 
   // 2. Synchronize Browser URL when React state changes (permalinks structure /news/category/article-slug)

@@ -34,9 +34,33 @@ export default function Hubs({
         const queryParam = type === 'location' ? `location=${slug}` : `entity=${slug}`;
         const contentRes = await fetch(`/api/v1/contents?${queryParam}`);
         const contentData = await contentRes.json();
+        let fetchedList = contentData.contents || [];
+
+        try {
+          const localStr = localStorage.getItem('infobos_custom_articles');
+          if (localStr) {
+            const localArticles = JSON.parse(localStr);
+            if (Array.isArray(localArticles)) {
+              const existingIds = new Set(fetchedList.map((a: any) => a.id));
+              const uniqueLocal = localArticles.filter((a: any) => !existingIds.has(a.id));
+              
+              // Filter by location or entity slug
+              let filteredLocal = uniqueLocal;
+              if (type === 'location') {
+                filteredLocal = uniqueLocal.filter((a: any) => a.location === slug);
+              } else {
+                // If entity, we can check if it matches content entities if stored, or just include it
+                filteredLocal = uniqueLocal.filter((a: any) => a.entities?.includes(slug) || a.title.toLowerCase().includes(slug.toLowerCase()));
+              }
+              fetchedList = [...filteredLocal, ...fetchedList];
+            }
+          }
+        } catch (e) {
+          console.error("Gagal menggabungkan draf berita lokal:", e);
+        }
 
         setInfo(infoData[type] || null);
-        setRelatedArticles(contentData.contents || []);
+        setRelatedArticles(fetchedList);
         setLoading(false);
       } catch (err) {
         console.error("Gagal memuat hub data:", err);

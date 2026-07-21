@@ -322,7 +322,20 @@ export default function SEOHub({ onNavigateToCategory }: SEOHubProps) {
       fetch('/api/v1/categories').then(res => res.json())
     ])
     .then(([contentsData, categoriesData]) => {
-      const list = contentsData.contents || [];
+      let list = contentsData.contents || [];
+      try {
+        const localStr = localStorage.getItem('infobos_custom_articles');
+        if (localStr) {
+          const localArticles = JSON.parse(localStr);
+          if (Array.isArray(localArticles)) {
+            const existingIds = new Set(list.map((c: any) => c.id));
+            const uniqueLocal = localArticles.filter((c: any) => !existingIds.has(c.id));
+            list = [...uniqueLocal, ...list];
+          }
+        }
+      } catch (e) {
+        console.error("Gagal menggabungkan draf berita lokal:", e);
+      }
       setArticles(list);
       setCategories(categoriesData.categories || []);
       if (list.length > 0) {

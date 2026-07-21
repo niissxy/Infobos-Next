@@ -513,7 +513,23 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
-      if (data.contents) setContents(data.contents);
+      let list = data.contents || [];
+      
+      try {
+        const localStr = localStorage.getItem('infobos_custom_articles');
+        if (localStr) {
+          const localArticles = JSON.parse(localStr);
+          if (Array.isArray(localArticles)) {
+            const existingIds = new Set(list.map((c: any) => c.id));
+            const uniqueLocal = localArticles.filter((c: any) => !existingIds.has(c.id));
+            list = [...uniqueLocal, ...list];
+          }
+        }
+      } catch (e) {
+        console.error("Gagal menggabungkan draf berita lokal untuk CMS:", e);
+      }
+      
+      setContents(list);
     } catch (e) {
       console.error(e);
     }
@@ -591,6 +607,19 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
       const data = await res.json();
       if (res.ok) {
         showNotification("Draf sukses dibuat & diperkaya Gemini NLP tags!");
+        
+        // Save the newly created article draft to localStorage
+        if (data.content) {
+          try {
+            const localStr = localStorage.getItem('infobos_custom_articles') || '[]';
+            const localArticles = JSON.parse(localStr);
+            localArticles.unshift(data.content);
+            localStorage.setItem('infobos_custom_articles', JSON.stringify(localArticles));
+          } catch (e) {
+            console.error("Gagal menyimpan draf berita lokal:", e);
+          }
+        }
+
         setTitle('');
         setSubtitle('');
         setBody('');
@@ -623,6 +652,24 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
       const data = await res.json();
       if (res.ok) {
         showNotification(`Sukses mengubah state transisi: ${transition.toUpperCase()}`);
+        
+        // Save the updated article to localStorage
+        if (data.content) {
+          try {
+            const localStr = localStorage.getItem('infobos_custom_articles') || '[]';
+            const localArticles = JSON.parse(localStr);
+            const idx = localArticles.findIndex((a: any) => a.id === data.content.id);
+            if (idx !== -1) {
+              localArticles[idx] = data.content;
+            } else {
+              localArticles.unshift(data.content);
+            }
+            localStorage.setItem('infobos_custom_articles', JSON.stringify(localArticles));
+          } catch (e) {
+            console.error("Gagal memperbarui draf berita lokal:", e);
+          }
+        }
+
         fetchCmsData();
         fetchAuditData();
       } else {

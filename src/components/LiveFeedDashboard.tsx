@@ -160,7 +160,20 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
     const fetchArticles = fetch('/api/v1/contents')
       .then(res => res.json())
       .then(data => {
-        const list = data.contents || [];
+        let list = data.contents || [];
+        try {
+          const localStr = localStorage.getItem('infobos_custom_articles');
+          if (localStr) {
+            const localArticles = JSON.parse(localStr);
+            if (Array.isArray(localArticles)) {
+              const existingIds = new Set(list.map((item: any) => item.id));
+              const uniqueLocal = localArticles.filter((item: any) => !existingIds.has(item.id));
+              list = [...uniqueLocal, ...list];
+            }
+          }
+        } catch (e) {
+          console.error("Gagal menggabungkan draf berita lokal:", e);
+        }
         // Filter out live feeds so we only show actual articles
         const filtered = list.filter((item: Content) => 
           item.primaryCategoryId !== 'live-feed' && 

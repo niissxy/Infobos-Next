@@ -649,7 +649,35 @@ export default function Homepage({
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        setArticles(data.contents || []);
+        let fetched = data.contents || [];
+        try {
+          const localStr = localStorage.getItem('infobos_custom_articles');
+          if (localStr) {
+            const localArticles = JSON.parse(localStr);
+            if (Array.isArray(localArticles)) {
+              const existingIds = new Set(fetched.map((a: any) => a.id));
+              const uniqueLocal = localArticles.filter((a: any) => !existingIds.has(a.id));
+              
+              let filteredLocal = uniqueLocal;
+              if (categorySlug && categorySlug !== 'home') {
+                filteredLocal = uniqueLocal.filter((a: any) => a.primaryCategoryId === categorySlug || a.categorySlug === categorySlug);
+              }
+              if (activeRegion && activeRegion !== 'semua') {
+                filteredLocal = filteredLocal.filter((a: any) => a.location === activeRegion || a.primaryCategoryId === 'live-feed');
+              }
+              if (activeSentiment && activeSentiment !== 'semua') {
+                filteredLocal = filteredLocal.filter((a: any) => a.sentiment === activeSentiment);
+              }
+              if (activeContentType && activeContentType !== 'semua') {
+                filteredLocal = filteredLocal.filter((a: any) => a.contentType === activeContentType);
+              }
+              fetched = [...filteredLocal, ...fetched];
+            }
+          }
+        } catch (e) {
+          console.error("Gagal menggabungkan draf berita lokal:", e);
+        }
+        setArticles(fetched);
         setLoading(false);
       })
       .catch(err => {

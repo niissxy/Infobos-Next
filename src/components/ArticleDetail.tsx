@@ -517,6 +517,22 @@ export default function ArticleDetail({
           setData(resData.content);
           setSelectedQuote(resData.content.summary || '');
           addAnalyticsLog(`Memuat artikel slug: "${slug}"`);
+        } else {
+          // Check local storage fallback
+          try {
+            const localStr = localStorage.getItem('infobos_custom_articles');
+            if (localStr) {
+              const localArticles = JSON.parse(localStr);
+              const found = localArticles.find((a: any) => a.slug === slug || a.id === slug);
+              if (found) {
+                setData(found);
+                setSelectedQuote(found.summary || '');
+                addAnalyticsLog(`Memuat artikel lokal slug: "${slug}"`);
+              }
+            }
+          } catch (e) {
+            console.error("Gagal memuat detail berita lokal:", e);
+          }
         }
         setLoading(false);
         
@@ -531,6 +547,21 @@ export default function ArticleDetail({
       })
       .catch(err => {
         console.error("Gagal memuat detail berita:", err);
+        // Attempt local storage fallback even on network/fetch errors
+        try {
+          const localStr = localStorage.getItem('infobos_custom_articles');
+          if (localStr) {
+            const localArticles = JSON.parse(localStr);
+            const found = localArticles.find((a: any) => a.slug === slug || a.id === slug);
+            if (found) {
+              setData(found);
+              setSelectedQuote(found.summary || '');
+              addAnalyticsLog(`Memuat artikel lokal slug (fallback): "${slug}"`);
+            }
+          }
+        } catch (e) {
+          console.error("Gagal memuat detail berita lokal fallback:", e);
+        }
         setLoading(false);
       });
   }, [slug]);
