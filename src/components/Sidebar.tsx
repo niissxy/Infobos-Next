@@ -218,13 +218,13 @@ const NAVIGATION_DATA = [
     featureCount: 145,
     description: 'Ekosistem perdagangan antar-perusahaan, sewa alat berat, tender proyek, dan karir lowongan kerja.',
     items: [
-      { id: 'nav-mkt-produk', name: 'Produk Unggulan', route: 'community-marketplace', type: 'widget', description: 'Pasar jual beli bahan industri & komoditas.', status: 'active' },
-      { id: 'nav-mkt-jasa', name: 'Jasa Profesional', route: 'community-marketplace', type: 'widget', description: 'Konsultasi hukum, audit IT, agensi pemasaran.', status: 'active' },
-      { id: 'nav-mkt-sewa', name: 'Sewa Properti/Alat', route: 'community-marketplace', type: 'widget', description: 'Penyewaan ruang kantor, armada pengiriman.', status: 'active' },
-      { id: 'nav-mkt-tender', name: 'Tender Pengadaan', route: 'community-marketplace', type: 'widget', description: 'Informasi resmi e-procurement BUMN.', status: 'active' },
-      { id: 'nav-mkt-proyek', name: 'Proyek Infrastruktur', route: 'community-marketplace', type: 'widget', description: 'Listing pengerjaan jalan tol, jaringan listrik.', status: 'active' },
-      { id: 'nav-mkt-lowongan', name: 'Lowongan Kerja', route: 'community-marketplace', type: 'widget', description: 'Karir eksekutif dan staf khusus industri.', status: 'active' },
-      { id: 'nav-mkt-freelance', name: 'Freelancer Hub', route: 'community-marketplace', type: 'widget', description: 'Kontrak kerja lepas ahli bahasa & analis data.', status: 'beta' }
+      { id: 'nav-mkt-produk', name: 'Produk Unggulan', route: 'marketplace-hub', type: 'widget', description: 'Pasar jual beli bahan industri & komoditas.', status: 'active' },
+      { id: 'nav-mkt-jasa', name: 'Jasa Profesional', route: 'marketplace-hub', type: 'widget', description: 'Konsultasi hukum, audit IT, agensi pemasaran.', status: 'active' },
+      { id: 'nav-mkt-sewa', name: 'Sewa Properti/Alat', route: 'marketplace-hub', type: 'widget', description: 'Penyewaan ruang kantor, armada pengiriman.', status: 'active' },
+      { id: 'nav-mkt-tender', name: 'Tender Pengadaan', route: 'jobs-hub', type: 'widget', description: 'Informasi resmi e-procurement BUMN.', status: 'active' },
+      { id: 'nav-mkt-proyek', name: 'Proyek Infrastruktur', route: 'jobs-hub', type: 'widget', description: 'Listing pengerjaan jalan tol, jaringan listrik.', status: 'active' },
+      { id: 'nav-mkt-lowongan', name: 'Lowongan Kerja', route: 'jobs-hub', type: 'widget', description: 'Karir eksekutif dan staf khusus industri.', status: 'active' },
+      { id: 'nav-mkt-freelance', name: 'Freelancer Hub', route: 'jobs-hub', type: 'widget', description: 'Kontrak kerja lepas ahli bahasa & analis data.', status: 'beta' }
     ]
   },
   {
@@ -235,10 +235,10 @@ const NAVIGATION_DATA = [
     featureCount: 120,
     description: 'Saluran interaktif berupa grup diskusi, jajak pendapat, pameran virtual, dan live chat redaksi.',
     items: [
-      { id: 'nav-com-forum', name: 'Forum Komunitas', route: 'community-marketplace', type: 'menu', description: 'Kamar diskusi terbuka per kategori topik bisnis.', status: 'active' },
-      { id: 'nav-com-grup', name: 'Grup Afiliasi', route: 'community-marketplace', type: 'menu', description: 'Komunitas regional pengusaha muda.', status: 'active' },
-      { id: 'nav-com-polling', name: 'Interactive Polling', route: 'community-marketplace', type: 'menu', description: 'Jajak pendapat publik mingguan.', status: 'active' },
-      { id: 'nav-com-chat', name: 'Live Chat Redaksi', route: 'community-marketplace', type: 'menu', description: 'Saluran siaran langsung respon cepat pembaca.', status: 'beta' }
+      { id: 'nav-com-forum', name: 'Forum Komunitas', route: 'forum-hub', type: 'menu', description: 'Kamar diskusi terbuka per kategori topik bisnis.', status: 'active' },
+      { id: 'nav-com-grup', name: 'Grup Afiliasi', route: 'forum-hub', type: 'menu', description: 'Komunitas regional pengusaha muda.', status: 'active' },
+      { id: 'nav-com-polling', name: 'Interactive Polling', route: 'forum-hub', type: 'menu', description: 'Jajak pendapat publik mingguan.', status: 'active' },
+      { id: 'nav-com-chat', name: 'Live Chat Redaksi', route: 'forum-hub', type: 'menu', description: 'Saluran siaran langsung respon cepat pembaca.', status: 'beta' }
     ]
   },
   {
@@ -254,7 +254,7 @@ const NAVIGATION_DATA = [
       { id: 'nav-intel-biz', name: 'Business Intelligence', route: 'intelligence-workspace', type: 'dashboard', description: 'Statistik korporasi terintegrasi, laporan neraca.', status: 'active' },
       { id: 'nav-intel-fin', name: 'Financial Intelligence', route: 'financial-intelligence', type: 'dashboard', description: 'Kalkulator arus kas, ekspor-impor regional.', status: 'active' },
       { id: 'nav-intel-mon', name: 'Monitoring Sentimen', route: 'intelligence-workspace', type: 'dashboard', description: 'Pemantauan kata kunci media sosial real-time.', status: 'active' },
-      { id: 'nav-intel-insight', name: 'AI Insight Report', route: 'ai-analytics', type: 'report', description: 'Ekstraksi otomatis ringkasan eksekutif mingguan.', status: 'beta' },
+      { id: 'nav-intel-insight', name: 'AI Insight Report', route: 'intelligence-workspace', type: 'report', description: 'Ekstraksi otomatis ringkasan eksekutif mingguan.', status: 'beta' },
       { id: 'nav-intel-research', name: 'Research Center', route: 'document-center', type: 'report', description: 'Pusat unggah jurnal resmi regulasi pemerintah.', status: 'active' }
     ]
   },
@@ -267,10 +267,10 @@ const NAVIGATION_DATA = [
     description: 'Workspace generasi masa depan: asisten pintar chatbot, analisis dokumen, dan automasi agen berita.',
     allowedRoles: ['admin', 'redaktur', 'partner', 'analyst'],
     items: [
-      { id: 'nav-ai-chat', name: 'AI Chatbot Assistant', route: 'ai-analytics', type: 'ai-agent', description: 'Diskusi interaktif dengan model Gemini 2.0 Flash.', status: 'active' },
+      { id: 'nav-ai-chat', name: 'AI Chatbot Assistant', route: 'feature-explorer', type: 'ai-agent', description: 'Diskusi interaktif dengan model Gemini 2.0 Flash.', status: 'active' },
       { id: 'nav-ai-search', name: 'AI Semantic Search', route: 'seo-hub', type: 'ai-agent', description: 'Pencarian berbasis makna melintasi ribuan arsip berita.', status: 'active' },
       { id: 'nav-ai-summary', name: 'AI Auto-Summarizer', route: 'document-center', type: 'ai-agent', description: 'Kompilasi artikel panjang menjadi ringkasan 3 poin.', status: 'active' },
-      { id: 'nav-ai-agents', name: 'Autonomous News Agents', route: 'ai-analytics', type: 'ai-agent', description: 'Bot terjadwal yang menyusun rancangan artikel regional.', status: 'beta' },
+      { id: 'nav-ai-agents', name: 'Autonomous News Agents', route: 'intelligence-workspace', type: 'ai-agent', description: 'Bot terjadwal yang menyusun rancangan artikel regional.', status: 'beta' },
       { id: 'nav-ai-auto', name: 'Publish Automation', route: 'seo-hub', type: 'ai-agent', description: 'Integrasi rujukan silang tag SEO ke WordPress/TikTok.', status: 'active' },
       { id: 'nav-ai-work', name: 'AI Collaborative Workspace', route: 'intelligence-workspace', type: 'ai-agent', description: 'Kanban board interaktif dibantu asisten AI.', status: 'active' }
     ]

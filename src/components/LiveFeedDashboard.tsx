@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Radio, Clock, User, MessageSquare, Send, RefreshCw, Plus, 
   MapPin, AlertCircle, Play, Pause, ExternalLink, Flame, CheckCircle2,
-  Tv, Volume2
+  Tv, Volume2, FileText
 } from 'lucide-react';
 
 interface Content {
@@ -69,6 +69,7 @@ const SIMULATION_POOL: Record<string, TimelineEntry[]> = {
 
 export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSelectArticle }) => {
   const [streams, setStreams] = useState<Content[]>([]);
+  const [generalArticles, setGeneralArticles] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeStreamId, setActiveStreamId] = useState<string | null>(null);
   const [activeTimeline, setActiveTimeline] = useState<TimelineEntry[]>([]);
@@ -136,10 +137,12 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
     return entries;
   };
 
-  // Fetch streams
+  // Fetch streams and general articles
   useEffect(() => {
     setLoading(true);
-    fetch('/api/v1/contents?category=live-feed')
+    
+    // Fetch live feed streams
+    const fetchStreams = fetch('/api/v1/contents?category=live-feed')
       .then(res => res.json())
       .then(data => {
         const list = data.contents || [];
@@ -148,12 +151,31 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
           setActiveStreamId(list[0].id);
           setActiveTimeline(parseTimeline(list[0].body));
         }
-        setLoading(false);
       })
       .catch(err => {
         console.error("Error loading live feeds:", err);
-        setLoading(false);
       });
+
+    // Fetch general articles
+    const fetchArticles = fetch('/api/v1/contents')
+      .then(res => res.json())
+      .then(data => {
+        const list = data.contents || [];
+        // Filter out live feeds so we only show actual articles
+        const filtered = list.filter((item: Content) => 
+          item.primaryCategoryId !== 'live-feed' && 
+          item.categoryName?.toLowerCase() !== 'live feed' &&
+          item.slug !== 'live-feed'
+        );
+        setGeneralArticles(filtered.slice(0, 8)); // Get top 8 articles
+      })
+      .catch(err => {
+        console.error("Error loading general articles:", err);
+      });
+
+    Promise.all([fetchStreams, fetchArticles]).finally(() => {
+      setLoading(false);
+    });
   }, []);
 
   // Update active timeline when stream changes
@@ -653,6 +675,65 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
               })}
             </div>
 
+          </div>
+
+          {/* ARTIKEL & BERITA PILIHAN */}
+          <div className="bg-white dark:bg-[#001c3d] border border-slate-200 dark:border-white/10 rounded-2xl p-4 shadow-3xs space-y-3 text-left">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-2">
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4 text-rose-500 animate-pulse" />
+                <h3 className="font-display font-black text-xs text-[#002B5B] dark:text-white uppercase tracking-wider">
+                  Berita & Artikel Pilihan
+                </h3>
+              </div>
+              <span className="text-[8px] bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-mono font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
+                TERBARU
+              </span>
+            </div>
+
+            <div className="space-y-3 max-h-[500px] overflow-y-auto scrollbar-none">
+              {generalArticles.length === 0 ? (
+                <div className="text-center py-6 text-slate-400 text-[10px] font-mono">
+                  Tidak ada artikel berita lainnya.
+                </div>
+              ) : (
+                generalArticles.map((article) => (
+                  <div 
+                    key={article.id}
+                    onClick={() => onSelectArticle(article.slug)}
+                    className="p-2.5 rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-white/10 bg-slate-50/50 dark:bg-[#002B5B]/5 hover:bg-slate-50 dark:hover:bg-[#002B5B]/15 transition cursor-pointer flex gap-2.5 group"
+                  >
+                    {/* Small visual image preview */}
+                    <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 relative">
+                      <img 
+                        src={article.heroImageUrl} 
+                        alt={article.title} 
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      />
+                    </div>
+
+                    <div className="min-w-0 flex-1 space-y-0.5">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[8px] font-mono font-black text-indigo-500 dark:text-indigo-400 uppercase tracking-wider">
+                          {article.categoryName || "Nasional"}
+                        </span>
+                        <span className="text-[8px] text-slate-400 font-mono">
+                          {article.readingTimeMinutes} mnt
+                        </span>
+                      </div>
+                      <h4 className="text-[11px] font-bold leading-tight text-[#002B5B] dark:text-slate-200 line-clamp-2 group-hover:text-rose-500 dark:group-hover:text-rose-400 transition">
+                        {article.title}
+                      </h4>
+                      <p className="text-[9px] text-slate-400 dark:text-slate-500 line-clamp-1 leading-snug">
+                        {article.summary}
+                      </p>
+                    </div>
+
+                  </div>
+                ))
+              )}
+            </div>
           </div>
 
           {/* REALTIME SYSTEM HEALTH */}
