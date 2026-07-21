@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Radio, Clock, User, MessageSquare, Send, RefreshCw, Plus, 
-  MapPin, AlertCircle, Play, Pause, ExternalLink, Flame, CheckCircle2 
+  MapPin, AlertCircle, Play, Pause, ExternalLink, Flame, CheckCircle2,
+  Tv, Volume2
 } from 'lucide-react';
 
 interface Content {
@@ -77,6 +78,10 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
   const [customReportText, setCustomReportText] = useState('');
   const [customReportTime, setCustomReportTime] = useState('LIVE');
   const [notif, setNotif] = useState<string | null>(null);
+  
+  // States for Live TV Stream Component
+  const [activeChannel, setActiveChannel] = useState<'infobos-tv' | 'jabar-news' | 'bandung-live'>('infobos-tv');
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
 
   const autoSimTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -322,6 +327,107 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
         
         {/* LEFT COLUMN: ACTIVE FEED (8 of 12) */}
         <div className="lg:col-span-8 space-y-5">
+          
+          {/* VIDEO TV & LIVE BROADCAST STREAM */}
+          <div className="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 border border-slate-850 space-y-3 shadow-md">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2 flex-wrap gap-2">
+              <div className="flex items-center gap-2 text-left">
+                <Tv className="h-4.5 w-4.5 text-rose-500 animate-pulse" />
+                <h3 className="font-display font-black text-xs uppercase tracking-wider text-slate-100">
+                  Video TV & Live Broadcast Stream
+                </h3>
+              </div>
+              <div className="flex gap-1.5">
+                {(['infobos-tv', 'jabar-news', 'bandung-live'] as const).map((ch) => (
+                  <button
+                    key={ch}
+                    onClick={() => setActiveChannel(ch)}
+                    className={`px-2.5 py-1 rounded text-[8px] font-mono font-bold uppercase tracking-wider transition cursor-pointer ${
+                      activeChannel === ch 
+                        ? 'bg-rose-600 text-white shadow-xs' 
+                        : 'bg-slate-800 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {ch.replace('-', ' ')}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Video Canvas Sim */}
+            <div className="relative aspect-video w-full bg-black rounded-lg overflow-hidden border border-slate-800 group">
+              <img 
+                src={
+                  activeChannel === 'infobos-tv' 
+                    ? "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" 
+                    : activeChannel === 'jabar-news'
+                    ? "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800"
+                    : "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800"
+                } 
+                alt="Live stream placeholder" 
+                className={`w-full h-full object-cover transition-opacity duration-300 ${isVideoPlaying ? 'opacity-70' : 'opacity-40'}`}
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-between p-3.5">
+                
+                {/* Live indicators */}
+                <div className="flex justify-between items-start">
+                  <span className="bg-rose-600 text-white text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></span>
+                    LIVE STREAMING
+                  </span>
+                  <span className="text-[9px] font-mono text-slate-300 bg-black/50 px-1.5 py-0.5 rounded">
+                    1080p • 60 FPS
+                  </span>
+                </div>
+
+                {/* Simulated center action overlay */}
+                {!isVideoPlaying && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button 
+                      type="button"
+                      onClick={() => setIsVideoPlaying(true)}
+                      className="p-3 rounded-full bg-[#FFD700] text-[#002B5B] shadow-lg hover:scale-105 transition cursor-pointer"
+                    >
+                      <Play className="h-6 w-6 fill-current" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Controls overlay at the bottom */}
+                <div className="space-y-1 bg-black/40 p-2 rounded-md backdrop-blur-xs">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-slate-200">
+                    <div className="flex items-center gap-2">
+                      <button 
+                        type="button"
+                        onClick={() => setIsVideoPlaying(!isVideoPlaying)} 
+                        className="hover:text-white transition cursor-pointer"
+                      >
+                        {isVideoPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                      </button>
+                      <span className="font-extrabold capitalize text-[#FFD700]">Channel: {activeChannel.replace('-', ' ')}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Volume2 className="h-3.5 w-3.5" />
+                      <div className="w-12 h-1 bg-slate-600 rounded">
+                        <div className="w-2/3 h-full bg-[#FFD700] rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-slate-300 text-left line-clamp-1 font-sans font-semibold">
+                    {activeChannel === 'infobos-tv' 
+                      ? "Siaran Pers Redaksi: Penataan Kawasan Gedung Sate dan Dampak Pariwisata Jawa Barat 2026."
+                      : activeChannel === 'jabar-news'
+                      ? "Liputan Khusus: Pemulihan Ekonomi Pasca Pandemi dan Agenda Pembangunan Infrastruktur Jawa Barat."
+                      : "Situasi Terkini: Pantauan CCTV ATCS Kota Bandung Live Arus Lalu Lintas Akhir Pekan."
+                    }
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
           {activeStream ? (
             <div className="bg-white dark:bg-[#001c3d] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
               
