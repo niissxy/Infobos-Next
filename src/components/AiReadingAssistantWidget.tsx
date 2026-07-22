@@ -19,7 +19,11 @@ import {
 
 interface Claim {
   text: string;
+<<<<<<< HEAD
   status: 'verified' | 'unverified' | 'misleading' | 'partially_true';
+=======
+  status: 'verified' | 'unverified' | 'misleading';
+>>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
   statusText: string;
   source: string;
   explanation: string;

@@ -11,6 +11,7 @@ import { EnterpriseSeedEngine } from './src/services/seed.service';
 import { GoogleGenAI, Type } from '@google/genai';
 import { ENHANCED_SITEMAP_80 } from './src/data/enhancedSitemap';
 
+<<<<<<< HEAD
 import * as http from 'http';
 
 function proxyToLaravel(req: express.Request, res: express.Response) {
@@ -42,12 +43,22 @@ function proxyToLaravel(req: express.Request, res: express.Response) {
   req.pipe(proxyReq, { end: true });
 }
 
+=======
+>>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
 async function startServer() {
   const app = express();
   const PORT = 3000;
 
+<<<<<<< HEAD
   // JSON Body Parsing Middleware ONLY for debug-log
   app.post('/api/v1/debug-log', express.json(), (req, res) => {
+=======
+  // JSON Body Parsing Middleware
+  app.use(express.json());
+
+  // DEBUG LOGGING ENDPOINT FOR CLIENT ERRORS
+  app.post('/api/v1/debug-log', (req, res) => {
+>>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
     try {
       const logData = `[${new Date().toISOString()}] ${JSON.stringify(req.body, null, 2)}\n\n`;
       fs.appendFileSync(path.join(process.cwd(), 'client_errors.log'), logData);
@@ -57,6 +68,7 @@ async function startServer() {
     res.json({ ok: true });
   });
 
+<<<<<<< HEAD
   // Proxy all other /api/v1 requests to the Laravel backend
   app.use('/api/v1', (req, res) => {
     proxyToLaravel(req, res);
@@ -65,6 +77,8 @@ async function startServer() {
   // JSON Body Parsing Middleware for other local Express routes (e.g. static pages, sitemaps, etc.)
   app.use(express.json());
 
+=======
+>>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
   const db = RelationalDB.getInstance();
 
   // Simple in-memory session tracking for API Auth & RBAC

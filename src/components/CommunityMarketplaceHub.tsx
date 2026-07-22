@@ -1773,7 +1773,11 @@ export default function CommunityMarketplaceHub({
     ]);
 
     setShowRentModal(false);
+<<<<<<< HEAD
     setActiveTab('escrow');
+=======
+    setActiveTab('payment');
+>>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
   };
 
   const handleCreateListingSubmit = (e: React.FormEvent) => {
