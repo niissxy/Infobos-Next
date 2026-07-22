@@ -1,0 +1,7 @@
+# This file is used by gcloud to determine which files to upload.
+# By default, gcloud respects .gitignore, which would ignore the 'dist' directory.
+# Creating this file overrides that behavior and ensures 'dist' is uploaded.
+
+.git/
+.gitignore
+node_modules/

@@ -1,0 +1,8 @@
+{
+  "name": "INFOBOS Next",
+  "description": "INFOBOS - Universal Media Intelligence Operating System (MediaOS) yang menghubungkan portal berita, ContentOS (VIRALOG), manajemen iklan (AdOS), intelijen spasial, pengawasan media, serta riset publik.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
