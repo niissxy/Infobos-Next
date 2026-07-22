@@ -1418,7 +1418,7 @@ Dampak sentimen pada masyarakat bernilai POSITIF 68% dengan tingkat risiko benca
           <div className="flex items-center gap-1.5 overflow-hidden">
             <AlertCircle className="h-4 w-4 text-rose-400 shrink-0" />
             <span className="font-extrabold uppercase text-rose-400 shrink-0">KRISIS PANGAN & SENTIMEN ALERTS:</span>
-            <marquee className="cursor-pointer">{alertsTriggered.map(alt => `[${alt.time}] ${alt.msg}`).join('  •  ')}</marquee>
+            <div className="cursor-pointer truncate">{alertsTriggered.map(alt => `[${alt.time}] ${alt.msg}`).join('  •  ')}</div>
           </div>
           <button 
             onClick={() => setAlertsTriggered([])}

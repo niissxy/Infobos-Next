@@ -2718,7 +2718,7 @@ export default function GeoIntelligenceHub({
                     {/* Active volcano indicators for earthquake map if disaster enabled */}
                     {enabledLayers.banjir && (
                       <g fill="#ef4444" stroke="#ffffff" strokeWidth="1">
-                        <polygon points="210,224 215,232 205,232" title="Gunung Merapi Waspada" />
+                        <polygon points="210,224 215,232 205,232" aria-label="Gunung Merapi Waspada" />
                         <polygon points="360,238 365,246 355,246" />
                       </g>
                     )}
@@ -2810,7 +2810,7 @@ export default function GeoIntelligenceHub({
                             cx="160" 
                             cy="120" 
                             r="5" 
-                            title="Berita Baru Bandung" 
+                            aria-label="Berita Baru Bandung" 
                             onClick={() => setSelectedElementId('marker-berita-bandung')}
                             className="cursor-pointer hover:scale-150 transition fill-emerald-400 stroke-white" 
                           />
@@ -2818,7 +2818,7 @@ export default function GeoIntelligenceHub({
                             cx="180" 
                             cy="150" 
                             r="5" 
-                            title="Tender Tol Cipularang" 
+                            aria-label="Tender Tol Cipularang" 
                             onClick={() => setSelectedElementId('marker-tender-cipularang')}
                             className="cursor-pointer hover:scale-150 transition fill-cyan-400 stroke-white" 
                           />
@@ -2826,7 +2826,7 @@ export default function GeoIntelligenceHub({
                             cx="280" 
                             cy="110" 
                             r="5" 
-                            title="Investasi Pabrik Cirebon" 
+                            aria-label="Investasi Pabrik Cirebon" 
                             onClick={() => setSelectedElementId('marker-pabrik-cirebon')}
                             className="cursor-pointer hover:scale-150 transition fill-amber-400 stroke-white" 
                           />
@@ -2839,7 +2839,7 @@ export default function GeoIntelligenceHub({
                             cx="165" 
                             cy="135" 
                             r="5" 
-                            title="CCTV Pasteur" 
+                            aria-label="CCTV Pasteur" 
                             onClick={() => {
                               setSelectedCity('Bandung');
                               setSelectedElementId('marker-cctv-pasteur');
@@ -2850,7 +2850,7 @@ export default function GeoIntelligenceHub({
                             cx="70" 
                             cy="75" 
                             r="5" 
-                            title="CCTV Bogor" 
+                            aria-label="CCTV Bogor" 
                             onClick={() => {
                               setSelectedCity('Bogor');
                               setSelectedElementId('marker-cctv-bogor');

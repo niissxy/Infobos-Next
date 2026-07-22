@@ -1137,7 +1137,7 @@ export default function Sidebar({
                             <div className="mt-1 pl-3.5 space-y-0.5 border-l border-slate-100 dark:border-slate-800 ml-1">
                               {category.items.map((item) => {
                                 const isSelected = currentTab === item.route;
-                                const hasAccess = isAccessible(item.allowedRoles);
+                                const hasAccess = isAccessible((item as any).allowedRoles);
 
                                 return (
                                   <div 

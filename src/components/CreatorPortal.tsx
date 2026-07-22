@@ -653,7 +653,9 @@ export default function CreatorPortal({ user, token }: CreatorPortalProps) {
                     </button>
                   </div>
                 </div>
-                          {/* TAB: FOLLOWERS */}
+              )}
+
+              {/* TAB: FOLLOWERS */}
               {activeTab === 'followers' && (
                 <div className="space-y-4">
                   <h3 className="font-display font-bold text-sm text-[#002B5B] dark:text-white border-b dark:border-white/10 pb-2">Pertumbuhan Pemirsa</h3>
@@ -729,8 +731,5 @@ export default function CreatorPortal({ user, token }: CreatorPortalProps) {
         </div>
       </div>
     </div>
-  );
-}
-</div>
   );
 }

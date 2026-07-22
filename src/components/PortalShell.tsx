@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Compass, Shield, User, LogOut, ArrowLeftRight, ChevronRight, 
   Home, Activity, Database, Cpu, Terminal, Sparkles, Layers, RefreshCw
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { getPortalConnection, PortalConnection } from '../services/portal.service';
 
 // Import portal components for mapping
 import MemberPortal from './MemberPortal';
@@ -63,6 +64,7 @@ export const portalComponentMap: Record<string, React.ComponentType<any>> = {
 interface PortalShellProps {
   activePortal: string;
   user: any;
+  token: string;
   simulatedRole: string;
   onPortalChange: (portal: string) => void;
   onLogout: () => void;
@@ -72,6 +74,7 @@ interface PortalShellProps {
 export default function PortalShell({
   activePortal,
   user,
+  token,
   simulatedRole,
   onPortalChange,
   onLogout,
@@ -84,6 +87,22 @@ export default function PortalShell({
     dbConn: 'Active',
     cache: '99.2% Hit Rate'
   });
+  const [connection, setConnection] = useState<PortalConnection | null>(null);
+  const [connectionError, setConnectionError] = useState('');
+
+  useEffect(() => {
+    setConnection(null);
+    setConnectionError('');
+
+    if (!token) {
+      setConnectionError('Masuk dengan akun backend untuk memverifikasi koneksi Laravel.');
+      return;
+    }
+
+    getPortalConnection(activePortal, token)
+      .then(setConnection)
+      .catch((error: Error) => setConnectionError(error.message));
+  }, [activePortal, token]);
 
   const handleRefreshMetrics = () => {
     setMetrics({
@@ -172,6 +191,7 @@ export default function PortalShell({
             <span>Mem: <strong className="text-white">{metrics.memory}</strong></span>
             <span>Database: <strong className="text-emerald-400">{metrics.dbConn}</strong></span>
             <span>Cache: <strong className="text-sky-400">{metrics.cache}</strong></span>
+            <span>Laravel: <strong className={connection ? 'text-emerald-400' : connectionError ? 'text-amber-400' : 'text-slate-300'}>{connection ? 'Connected' : connectionError ? 'Perlu autentikasi' : 'Checking'}</strong></span>
           </div>
           <button 
             onClick={handleRefreshMetrics}

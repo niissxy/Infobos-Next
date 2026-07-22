@@ -79,7 +79,7 @@ function AppContent() {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searching, setSearching] = useState(false);
   const [searchFilter, setSearchFilter] = useState<'all' | 'article' | 'location' | 'entity' | 'category' | 'topic_tag' | 'correction' | 'marketplace' | 'jobs'>('all');
-  const [marketplaceInitialTab, setMarketplaceInitialTab] = useState<'dashboard' | 'forum' | 'marketplace' | 'directory' | 'jobs' | 'chat'>('dashboard');
+  const [marketplaceInitialTab, setMarketplaceInitialTab] = useState<'dashboard' | 'forum' | 'marketplace' | 'directory' | 'jobs' | 'chat' | 'brands' | 'products' | 'organizations' | 'authors' | 'events'>('dashboard');
 
   // Footer & Sitemap Interactive states
   const [activeFooterModal, setActiveFooterModal] = useState<string | null>(null);
@@ -586,6 +586,7 @@ function AppContent() {
       <PortalShell
         activePortal={activePortal}
         user={currentUserObj}
+        token={effectiveToken}
         simulatedRole={simulatedRole}
         onPortalChange={setActivePortal}
         onLogout={handleLogout}
@@ -617,78 +618,38 @@ function AppContent() {
               Peran akun Anda (<strong>{currentRole.replace('_', ' ').toUpperCase()}</strong>) tidak terdaftar di matriks persetujuan untuk memasuki portal <strong>{activePortal.replace('_', ' ').toUpperCase()}</strong>.
             </p>
           </div>
+        ) : !['cms', 'advertiser', 'creator', 'editor', 'member'].includes(activePortal) ? (
+          <MaintenanceView
+            featureName={`${activePortal.replace('_', ' ')} portal`}
+            onBackToHome={() => setActivePortal('public')}
+          />
         ) : (
           (() => {
             switch (activePortal) {
               case 'member':
                 return (
-                  <MemberPortal 
-                    user={currentUserObj} 
-                    onLogout={handleLogout} 
+                  <MemberPortal
+                    user={currentUserObj}
+                    onLogout={handleLogout}
                     onNavigateToArticle={(slug) => {
                       setActivePortal('public');
                       handleNavigate(slug, 'article');
-                    }} 
+                    }}
                   />
                 );
               case 'creator':
                 return <CreatorPortal user={currentUserObj} token={effectiveToken} />;
-              case 'reporter':
-                return <ReporterPortal user={currentUserObj} />;
               case 'editor':
                 return <EditorPortal user={currentUserObj} />;
               case 'advertiser':
                 return <AdvertiserPortal user={currentUserObj} />;
-              case 'sales':
-                return <SalesPortal user={currentUserObj} token={effectiveToken} />;
-              case 'business':
-                return <BusinessPortal user={currentUserObj} token={effectiveToken} />;
-              case 'research':
-                return <ResearchPortal user={currentUserObj} token={effectiveToken} />;
-              case 'monitoring':
-                return <MonitoringPortal user={currentUserObj} token={effectiveToken} />;
-              case 'marketplace':
-                return <MarketplacePortal user={currentUserObj} />;
-              case 'community':
-                return <CommunityPortal user={currentUserObj} />;
-              case 'support':
-                return <CustomerSupportPortal user={currentUserObj} token={effectiveToken} />;
-              case 'moderator':
-                return <ModeratorPortal user={currentUserObj} token={effectiveToken} />;
               case 'cms':
                 return (
-                  <div className="space-y-8">
-                    <PremiumTrialShowcase 
-                      simulatedRole={simulatedRole} 
-                      onUpgradeSuccess={(newRole) => {
-                        setSimulatedRole(newRole);
-                      }} 
-                    />
-                    <CMSPortal user={currentUserObj} token={effectiveToken} />
-                    <div className="border-t border-slate-200 pt-8">
-                      <h3 className="font-display font-black text-sm text-[#002B5B] uppercase mb-4 text-left">Konsol Administratif VIRALOG Terbuka</h3>
-                      <AdminPanel user={currentUserObj} token={effectiveToken} onNavigateToArticle={(slug) => { setActivePortal('public'); handleNavigate(slug, 'article'); }} />
-                    </div>
+                  <div className="space-y-4">
+                    <h3 className="font-display font-black text-sm text-[#002B5B] uppercase text-left">Konsol Artikel &amp; Iklan</h3>
+                    <AdminPanel user={currentUserObj} token={effectiveToken} onNavigateToArticle={(slug) => { setActivePortal('public'); handleNavigate(slug, 'article'); }} />
                   </div>
                 );
-              case 'super_admin':
-                return (
-                  <div className="space-y-8">
-                    <PremiumTrialShowcase 
-                      simulatedRole={simulatedRole} 
-                      onUpgradeSuccess={(newRole) => {
-                        setSimulatedRole(newRole);
-                      }} 
-                    />
-                    <SuperAdminPortal user={currentUserObj} token={effectiveToken} />
-                  </div>
-                );
-              case 'developer':
-                return <DeveloperPortal user={currentUserObj} token={effectiveToken} />;
-              case 'finance':
-                return <FinancePortal user={currentUserObj} token={effectiveToken} />;
-              case 'government':
-                return <GovernmentPortal user={currentUserObj} token={effectiveToken} />;
               default:
                 return null;
             }

@@ -81,9 +81,9 @@ interface AgentOSWorkspaceProps {
   workflowNodes: WorkflowNode[];
   setWorkflowNodes: React.Dispatch<React.SetStateAction<WorkflowNode[]>>;
   workflowTesting: boolean;
-  setWorkflowTesting: (b: boolean) => void;
+  setWorkflowTesting: React.Dispatch<React.SetStateAction<boolean>>;
   activeTestStep: number;
-  setActiveTestStep: (n: number) => void;
+  setActiveTestStep: React.Dispatch<React.SetStateAction<number>>;
   customWorkflowName: string;
   setCustomWorkflowName: (s: string) => void;
   orchestratorPrompt: string;
@@ -226,7 +226,7 @@ export const AgentOSWorkspace: React.FC<AgentOSWorkspaceProps> = ({
   const [activeLogLevel, setActiveLogLevel] = useState<'ALL' | 'INFO' | 'WARN' | 'ERROR' | 'DEBUG'>('ALL');
 
   // Logs terminal state
-  const [terminalLogs, setTerminalLogs] = useState([
+  const [terminalLogs, setTerminalLogs] = useState<Array<{ id: string; timestamp: string; level: 'INFO' | 'WARN' | 'ERROR' | 'DEBUG'; agent: string; message: string }>>([
     { id: 'log-1', timestamp: '12:30:00', level: 'INFO' as const, agent: 'System', message: 'AI Analytics Engine initialized safely.' },
     { id: 'log-2', timestamp: '12:30:05', level: 'INFO' as const, agent: 'Security Agent', message: 'Verified SHA-256 integrity check. No permission leaks detected.' },
     { id: 'log-3', timestamp: '12:31:12', level: 'DEBUG' as const, agent: 'MCP Server', message: 'CMS server responded with status 200 OK (ping: 15ms)' },

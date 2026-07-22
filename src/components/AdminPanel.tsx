@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { IntegrationCMSManager } from './IntegrationEngine';
+import MaintenanceView from './MaintenanceView';
 import {
   FiscalMetricsWidget,
   BudgetTableWidget,
@@ -50,6 +51,7 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
 
   // Navigation inside Admin Panel
   const [activeSubTab, setActiveSubTab] = useState<'cms' | 'sources' | 'ads' | 'audits' | 'database' | 'integrations' | 'metrics'>('cms');
+  const isMaintenanceSubTab = !['cms', 'ads'].includes(activeSubTab);
 
   // CMS State
   const [contents, setContents] = useState<any[]>([]);
@@ -1077,6 +1079,8 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
         </div>
       )}
 
+      {isMaintenanceSubTab && <MaintenanceView featureName={activeSubTab} />}
+
       {/* ==================================================
           SUBTAB 1: VIRALOG CMS (Editorial Workstation)
           ================================================== */}
@@ -1358,7 +1362,7 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
       {/* ==================================================
           SUBTAB 2: EVOLIS INGESTION (Scraper Deck)
           ================================================== */}
-      {activeSubTab === 'sources' && (
+      {activeSubTab === 'sources' && !isMaintenanceSubTab && (
         <div className="space-y-6 text-left">
           <div className="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 space-y-3">
             <h3 className="font-display font-extrabold text-lg text-teal-400 flex items-center gap-1.5">
@@ -1747,7 +1751,7 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
       {/* ==================================================
           SUBTAB 4: SECURITY AUDIT TRAIL LOGS
           ================================================== */}
-      {activeSubTab === 'audits' && (
+      {activeSubTab === 'audits' && !isMaintenanceSubTab && (
         <div className="space-y-6 text-left font-mono text-xs">
           <div className="bg-slate-900 border border-slate-800 text-slate-100 p-5 rounded-2xl space-y-4">
             <h3 className="font-display font-extrabold text-base text-teal-400 flex items-center gap-1.5">
@@ -1784,7 +1788,7 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
       {/* ==================================================
           SUBTAB 5: SEED DATABASE & COMPLIANCE EXPLORER
           ================================================== */}
-      {activeSubTab === 'database' && (
+      {activeSubTab === 'database' && !isMaintenanceSubTab && (
         <div className="space-y-6 text-left">
           
           {/* Header Jumbotron */}
@@ -2441,11 +2445,11 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
         </div>
       )}
 
-      {activeSubTab === 'integrations' && (
+      {activeSubTab === 'integrations' && !isMaintenanceSubTab && (
         <IntegrationCMSManager token={token} />
       )}
 
-      {activeSubTab === 'metrics' && (
+      {activeSubTab === 'metrics' && !isMaintenanceSubTab && (
         <div className="space-y-6">
           <div className="bg-[#001f42] text-white p-6 rounded-2xl border border-white/10 shadow-xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none" />

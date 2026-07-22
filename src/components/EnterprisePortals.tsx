@@ -1108,7 +1108,7 @@ export function DeveloperPortal({ user }: PortalProps) {
   const [isTesting, setIsTesting] = useState<boolean>(false);
   const [latency, setLatency] = useState<number | null>(null);
   const [logFilter, setLogFilter] = useState<string>('ALL');
-  const [logItems, setLogItems] = useState([
+  const [logItems, setLogItems] = useState<Array<{ id: string | number; type: string; time: string; msg: string }>>([
     { id: 1, type: 'INFO', time: '14:20:06', msg: 'API Gateway initialized successfully on port 3000' },
     { id: 2, type: 'DEBUG', time: '14:20:15', msg: 'DB connection pool allocated: 25 active connections' },
     { id: 3, type: 'WARN', time: '14:22:10', msg: 'AdZone: zone "promoted_company" reached 85% of allocated memory limit' },

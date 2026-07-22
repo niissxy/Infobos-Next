@@ -87,7 +87,7 @@ export default function PopUpWidget({
     if (!inputVal.trim()) return;
 
     const userMsg = inputVal.trim();
-    const updated = [...messages, { sender: 'user', text: userMsg }];
+    const updated: Array<{ sender: 'user' | 'ai'; text: string }> = [...messages, { sender: 'user', text: userMsg }];
     setMessages(updated);
     setInputVal('');
 
