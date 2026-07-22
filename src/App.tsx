@@ -262,8 +262,9 @@ function AppContent() {
       }
     } else if (path !== '/' && path !== '') {
       const tab = path.replace(/^\/|\/$/g, '');
-      if (['home', 'feature-explorer', 'community-marketplace', 'marketplace-hub', 'jobs-hub', 'forum-hub', 'business-directory', 'brand-directory', 'product-directory', 'organization-directory', 'author-directory', 'event-directory', 'widget-cms', 'intelligence-workspace', 'revenue-os', 'finance-news', 'financial-intelligence', 'admin', 'regional', 'nasional', 'internasional', 'business', 'technology', 'ai-data', 'sports', 'lifestyle', 'investigasi', 'analisis', 'riset-insight', 'live-feed', 'geo-intelligence-os', 'seo-hub', 'mediaos', 'social-media-hub', 'system-explorer'].includes(tab)) {
-        setCurrentTab(tab);
+      const normalizedTab = tab === 'admininfobos' ? 'admin' : tab;
+      if (['home', 'feature-explorer', 'community-marketplace', 'marketplace-hub', 'jobs-hub', 'forum-hub', 'business-directory', 'brand-directory', 'product-directory', 'organization-directory', 'author-directory', 'event-directory', 'widget-cms', 'intelligence-workspace', 'revenue-os', 'finance-news', 'financial-intelligence', 'admin', 'regional', 'nasional', 'internasional', 'business', 'technology', 'ai-data', 'sports', 'lifestyle', 'investigasi', 'analisis', 'riset-insight', 'live-feed', 'geo-intelligence-os', 'seo-hub', 'mediaos', 'social-media-hub', 'system-explorer'].includes(normalizedTab)) {
+        setCurrentTab(normalizedTab);
       }
     }
 
@@ -303,7 +304,7 @@ function AppContent() {
         window.history.pushState({ type: activeHubType, slug: activeHubSlug }, '', newPath);
       }
     } else if (currentTab && currentTab !== 'home') {
-      const newPath = `/${currentTab}`;
+      const newPath = currentTab === 'admin' ? '/admininfobos' : `/${currentTab}`;
       if (window.location.pathname !== newPath && !newPath.includes('//')) {
         window.history.pushState({ type: 'tab', slug: currentTab }, '', newPath);
       }
@@ -364,7 +365,7 @@ function AppContent() {
         const tab = path.replace(/^\/|\/$/g, '');
         setActiveArticleSlug(null);
         setActiveHubSlug(null);
-        setCurrentTab(tab);
+        setCurrentTab(tab === 'admininfobos' ? 'admin' : tab);
       }
     };
 
@@ -399,7 +400,7 @@ function AppContent() {
       const parsedUser = JSON.parse(savedUser);
       setUser(parsedUser);
       // Auto-switch to member portal if authenticated, UNLESS on the admin page
-      if (window.location.pathname !== '/admin') {
+      if (window.location.pathname !== '/admininfobos') {
         setActivePortal('member');
       }
     }
@@ -410,8 +411,9 @@ function AppContent() {
     setUser(newUser);
     localStorage.setItem('infobos_token', newToken);
     localStorage.setItem('infobos_user', JSON.stringify(newUser));
+    window.dispatchEvent(new Event('infobos-auth-changed'));
     // Auto-switch to Member portal or first allowed portal, UNLESS requested to keep on admin CMS page
-    if (keepAdmin || currentTab === 'admin' || window.location.pathname === '/admin') {
+    if (keepAdmin || currentTab === 'admin' || window.location.pathname === '/admininfobos') {
       setActivePortal('public');
     } else {
       setActivePortal('member');
@@ -455,6 +457,7 @@ function AppContent() {
     setActivePortal('public');
     localStorage.removeItem('infobos_token');
     localStorage.removeItem('infobos_user');
+    window.dispatchEvent(new Event('infobos-auth-changed'));
     setCurrentTab('home');
     resetDetailViews();
   };

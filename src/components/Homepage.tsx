@@ -560,6 +560,7 @@ export default function Homepage({
   const [seismicData, setSeismicData] = useState<any[]>([]);
   const [seismicLoading, setSeismicLoading] = useState(true);
   const [seismicSource, setSeismicSource] = useState("Memuat...");
+  const [seismicMessage, setSeismicMessage] = useState('');
   const [selectedSeismicId, setSelectedSeismicId] = useState<string | null>(null);
   const [showMapForId, setShowMapForId] = useState<string | null>(null);
   const [copiedSeismicId, setCopiedSeismicId] = useState<string | null>(null);
@@ -568,16 +569,23 @@ export default function Homepage({
   const fetchSeismicData = () => {
     setSeismicLoading(true);
     fetch('/api/v1/seismic')
-      .then(res => res.json())
+      .then(async res => {
+        const body = await res.json();
+        if (!res.ok) throw new Error(body.message || 'Layanan seismik tidak tersedia');
+        return body;
+      })
       .then(resData => {
         if (resData.success) {
           setSeismicData(resData.data || []);
-          setSeismicSource(resData.source);
+          setSeismicSource(resData.source || 'Laravel');
+          setSeismicMessage(resData.message || '');
         }
         setSeismicLoading(false);
       })
       .catch(err => {
         console.error("Gagal mengambil data gempa:", err);
+        setSeismicSource('Tidak terhubung');
+        setSeismicMessage(err.message || 'Data gempa tidak dapat dimuat.');
         setSeismicLoading(false);
       });
   };
@@ -2149,7 +2157,13 @@ export default function Homepage({
               <div className="space-y-2.5">
                 {/* Scrollable list of recent earthquakes */}
                 <div className="space-y-2 max-h-[260px] overflow-y-auto pr-1">
-                  {seismicData.map((eq) => {
+                  {seismicData.length === 0 ? (
+                    <div className="rounded-lg border border-amber-100 bg-amber-50 px-3 py-4 text-center text-[10px] leading-relaxed text-amber-800">
+                      <AlertCircle className="mx-auto mb-1.5 h-4 w-4 text-amber-500" />
+                      <p className="font-bold">Data live gempa belum tersedia</p>
+                      <p className="mt-1 text-amber-700">{seismicMessage || `Status disajikan oleh ${seismicSource}.`}</p>
+                    </div>
+                  ) : seismicData.map((eq) => {
                     const isSelected = selectedSeismicId === eq.id;
                     let severityColor = "text-emerald-700 bg-emerald-50 border-emerald-100";
                     let magColor = "text-emerald-600";

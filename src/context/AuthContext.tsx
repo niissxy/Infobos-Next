@@ -1,10 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '../lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  fullName: string;
+  role: string;
+}
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   role: 'free' | 'premium' | null;
   loading: boolean;
 }
@@ -12,40 +16,42 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({ user: null, role: null, loading: true });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [role, setRole] = useState<'free' | 'premium' | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!auth) {
-      console.warn("Firebase Auth is not initialized. Falling back to default role.");
-      setRole('free');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-        setUser(currentUser);
-        if (currentUser && db) {
-          try {
-            const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-            setRole(userDoc.exists() ? userDoc.data().role : 'free');
-          } catch (docErr) {
-            console.error("Failed to fetch user doc from Firestore:", docErr);
-            setRole('free');
-          }
-        } else {
-          setRole(null);
-        }
+    const loadSession = async () => {
+      const token = localStorage.getItem('infobos_token');
+      if (!token) {
+        setUser(null);
+        setRole(null);
         setLoading(false);
-      });
-      return unsubscribe;
-    } catch (authErr) {
-      console.error("Failed to register onAuthStateChanged listener:", authErr);
-      setRole('free');
-      setLoading(false);
-    }
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/v1/auth/me', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        if (!response.ok || !data.user) throw new Error('Session invalid');
+
+        setUser(data.user);
+        setRole(data.user.role === 'premium' ? 'premium' : 'free');
+      } catch {
+        localStorage.removeItem('infobos_token');
+        localStorage.removeItem('infobos_user');
+        setUser(null);
+        setRole(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void loadSession();
+    window.addEventListener('infobos-auth-changed', loadSession);
+    return () => window.removeEventListener('infobos-auth-changed', loadSession);
   }, []);
 
   return <AuthContext.Provider value={{ user, role, loading }}>{children}</AuthContext.Provider>;

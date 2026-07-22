@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../lib/firebase';
-import { useAuth } from '../context/AuthContext';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +8,17 @@ export const LoginForm: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const response = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Login gagal');
+
+      localStorage.setItem('infobos_token', data.token);
+      localStorage.setItem('infobos_user', JSON.stringify(data.user));
+      window.dispatchEvent(new Event('infobos-auth-changed'));
     } catch (err: any) {
       setError(err.message);
     }

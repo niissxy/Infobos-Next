@@ -292,7 +292,7 @@ export default function DeveloperDocs() {
                     {activeEndpoint.method}
                   </span>
                   <span className="font-mono text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-950 px-2.5 py-1 rounded-lg">
-                    https://infobos.co{activeEndpoint.path}
+                    https://api.infobos.news{activeEndpoint.path}
                   </span>
                 </div>
                 <h3 className="text-base sm:text-lg font-display font-black text-slate-900 dark:text-white leading-tight">
@@ -346,7 +346,7 @@ export default function DeveloperDocs() {
                   <div className="flex items-center justify-between pl-1">
                     <span className="text-[9px] font-mono font-black text-slate-400 uppercase">JavaScript (Fetch)</span>
                     <button 
-                      onClick={() => handleCopyCode(`fetch('https://infobos.co${activeEndpoint.path}', {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY'\n  }\n})\n.then(res => res.json())\n.then(data => console.log(data));`, 1)}
+                      onClick={() => handleCopyCode(`fetch('https://api.infobos.news${activeEndpoint.path}', {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY'\n  }\n})\n.then(res => res.json())\n.then(data => console.log(data));`, 1)}
                       className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
                       title="Salin Code"
                     >
@@ -354,7 +354,7 @@ export default function DeveloperDocs() {
                     </button>
                   </div>
                   <pre className="p-4 rounded-xl bg-slate-950 text-slate-300 text-[10px] font-mono overflow-x-auto leading-relaxed border border-white/5 shadow-inner">
-                    {`fetch('https://infobos.co${activeEndpoint.path}', {
+                    {`fetch('https://api.infobos.news${activeEndpoint.path}', {
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY'
   }
@@ -369,7 +369,7 @@ export default function DeveloperDocs() {
                   <div className="flex items-center justify-between pl-1">
                     <span className="text-[9px] font-mono font-black text-slate-400 uppercase">Python (Requests)</span>
                     <button 
-                      onClick={() => handleCopyCode(`import requests\n\nurl = "https://infobos.co${activeEndpoint.path}"\nheaders = {\n    "Authorization": "Bearer YOUR_API_KEY"\n}\n\nr = requests.${activeEndpoint.method.toLowerCase()}(url, headers=headers)\nprint(r.json())`, 2)}
+                      onClick={() => handleCopyCode(`import requests\n\nurl = "https://api.infobos.news${activeEndpoint.path}"\nheaders = {\n    "Authorization": "Bearer YOUR_API_KEY"\n}\n\nr = requests.${activeEndpoint.method.toLowerCase()}(url, headers=headers)\nprint(r.json())`, 2)}
                       className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
                       title="Salin Code"
                     >
@@ -379,7 +379,7 @@ export default function DeveloperDocs() {
                   <pre className="p-4 rounded-xl bg-slate-950 text-slate-300 text-[10px] font-mono overflow-x-auto leading-relaxed border border-white/5 shadow-inner">
                     {`import requests
 
-url = "https://infobos.co${activeEndpoint.path}"
+url = "https://api.infobos.news${activeEndpoint.path}"
 headers = {
     "Authorization": "Bearer YOUR_API_KEY"
 }

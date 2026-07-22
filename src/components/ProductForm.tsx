@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { db } from '../lib/firebase';
-import { collection, addDoc } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
 
 export const ProductForm: React.FC = () => {
@@ -12,23 +10,24 @@ export const ProductForm: React.FC = () => {
 
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) {
-      alert('Koneksi database tidak tersedia saat ini. Silakan coba beberapa saat lagi.');
-      return;
-    }
-    // Logic: Free members can only add 1 product?
-    // Let's just implement a simple check: Premium members get a 'featured' tag
     try {
-      await addDoc(collection(db, 'products'), {
+      const response = await fetch('/api/v1/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('infobos_token') || ''}`,
+        },
+        body: JSON.stringify({
         title,
         description,
-        ownerId: user.uid,
-        isPremium: role === 'premium',
-        createdAt: new Date()
+          isPremium: role === 'premium',
+        }),
       });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Gagal menambahkan produk');
       alert('Produk berhasil ditambahkan!');
     } catch (err) {
-      console.error('Failed to add product to Firestore:', err);
+      console.error('Failed to add product to Laravel:', err);
       alert('Gagal menambahkan produk. Silakan coba lagi.');
     }
   };
