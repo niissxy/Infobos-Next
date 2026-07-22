@@ -54,23 +54,9 @@ import {
   MarketplacePortal, CommunityPortal, CustomerSupportPortal, ModeratorPortal
 } from './components/NewEnterprisePortals';
 import NavigationExplorer from './components/NavigationExplorer';
-<<<<<<< HEAD
 import MaintenanceView from './components/MaintenanceView';
 
 import { FEATURE_REGISTRY, getProcessedSitemapGroups } from './data/featureRegistry';
-
-const MAINTENANCE_TABS = [
-  'feature-explorer', 'widget-cms', 
-  'intelligence-workspace', 'finance', 'financial-intelligence', 'revenue-os', 
-  'video-hub', 'short-video-hub', 'podcast-center', 'document-center', 
-  'media-academy', 'technical-tutorials', 'developer-docs', 'general-faq', 
-  'gallery-center', 'interactive-data', 'event-center', 'channel-center', 
-  'seo-hub', 'mediaos', 'social-media-hub', 'system-explorer', 'geo-intelligence-os'
-];
-=======
-
-import { FEATURE_REGISTRY, getProcessedSitemapGroups } from './data/featureRegistry';
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
 import { Compass, Search, Calendar, RefreshCw, Mail, ShieldAlert, MapPin, Globe, Send, MessageSquare, Check, X, Shield, Info, Database, Activity, Heart, ChevronDown, ChevronUp, Tv, Headphones, CreditCard, Users, Map, Sparkles, Cpu, Layers, Tag, Briefcase, Newspaper, Terminal, Calculator } from 'lucide-react';
 
 export default function App() {
@@ -646,11 +632,7 @@ function AppContent() {
                   />
                 );
               case 'creator':
-<<<<<<< HEAD
                 return <CreatorPortal user={currentUserObj} token={effectiveToken} />;
-=======
-                return <CreatorPortal user={currentUserObj} />;
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
               case 'reporter':
                 return <ReporterPortal user={currentUserObj} />;
               case 'editor':
@@ -658,37 +640,21 @@ function AppContent() {
               case 'advertiser':
                 return <AdvertiserPortal user={currentUserObj} />;
               case 'sales':
-<<<<<<< HEAD
-                return <MaintenanceView featureName="Sales Portal" onBackToHome={() => setActivePortal('public')} />;
+                return <SalesPortal user={currentUserObj} token={effectiveToken} />;
               case 'business':
-                return <MaintenanceView featureName="Business Portal" onBackToHome={() => setActivePortal('public')} />;
+                return <BusinessPortal user={currentUserObj} token={effectiveToken} />;
               case 'research':
-                return <MaintenanceView featureName="Research Portal" onBackToHome={() => setActivePortal('public')} />;
+                return <ResearchPortal user={currentUserObj} token={effectiveToken} />;
               case 'monitoring':
-                return <MaintenanceView featureName="Monitoring Portal" onBackToHome={() => setActivePortal('public')} />;
-=======
-                return <PartnerOS user={currentUserObj} />;
-              case 'business':
-                return <BusinessPortal user={currentUserObj} />;
-              case 'research':
-                return <ResearchPortal user={currentUserObj} />;
-              case 'monitoring':
-                return <MonitoringPortal user={currentUserObj} />;
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
+                return <MonitoringPortal user={currentUserObj} token={effectiveToken} />;
               case 'marketplace':
                 return <MarketplacePortal user={currentUserObj} />;
               case 'community':
                 return <CommunityPortal user={currentUserObj} />;
               case 'support':
-<<<<<<< HEAD
-                return <MaintenanceView featureName="Customer Support Portal" onBackToHome={() => setActivePortal('public')} />;
+                return <CustomerSupportPortal user={currentUserObj} token={effectiveToken} />;
               case 'moderator':
-                return <MaintenanceView featureName="Moderator Portal" onBackToHome={() => setActivePortal('public')} />;
-=======
-                return <CustomerSupportPortal user={currentUserObj} />;
-              case 'moderator':
-                return <ModeratorPortal user={currentUserObj} />;
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
+                return <ModeratorPortal user={currentUserObj} token={effectiveToken} />;
               case 'cms':
                 return (
                   <div className="space-y-8">
@@ -706,15 +672,6 @@ function AppContent() {
                   </div>
                 );
               case 'super_admin':
-<<<<<<< HEAD
-                return <MaintenanceView featureName="Super Admin Portal" onBackToHome={() => setActivePortal('public')} />;
-              case 'developer':
-                return <MaintenanceView featureName="Developer Portal" onBackToHome={() => setActivePortal('public')} />;
-              case 'finance':
-                return <MaintenanceView featureName="Finance Portal" onBackToHome={() => setActivePortal('public')} />;
-              case 'government':
-                return <MaintenanceView featureName="Government Portal" onBackToHome={() => setActivePortal('public')} />;
-=======
                 return (
                   <div className="space-y-8">
                     <PremiumTrialShowcase 
@@ -723,16 +680,15 @@ function AppContent() {
                         setSimulatedRole(newRole);
                       }} 
                     />
-                    <SuperAdminPortal user={currentUserObj} />
+                    <SuperAdminPortal user={currentUserObj} token={effectiveToken} />
                   </div>
                 );
               case 'developer':
-                return <DeveloperPortal user={currentUserObj} />;
+                return <DeveloperPortal user={currentUserObj} token={effectiveToken} />;
               case 'finance':
-                return <FinancePortal user={currentUserObj} />;
+                return <FinancePortal user={currentUserObj} token={effectiveToken} />;
               case 'government':
-                return <GovernmentPortal user={currentUserObj} />;
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
+                return <GovernmentPortal user={currentUserObj} token={effectiveToken} />;
               default:
                 return null;
             }
@@ -1088,13 +1044,8 @@ function AppContent() {
 
             {/* VIEW 4: PUBLIC HOMEPAGE / FEED OR MEDIA HUB CENTERS */}
             {!searchVal && !activeArticleSlug && !activeHubSlug && currentTab !== 'admin' && (
-<<<<<<< HEAD
-              MAINTENANCE_TABS.includes(currentTab) ? (
-                <MaintenanceView featureName={currentTab} onBackToHome={() => setCurrentTab('home')} />
-=======
               currentTab === 'feature-explorer' ? (
                 <FeatureExplorer onTabChange={handleTabChange} user={user} />
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
               ) : (currentTab === 'community-marketplace' || currentTab === 'marketplace-hub' || currentTab === 'jobs-hub' || currentTab === 'forum-hub' || currentTab === 'business-directory' || currentTab === 'brand-directory' || currentTab === 'product-directory' || currentTab === 'organization-directory' || currentTab === 'author-directory' || currentTab === 'event-directory') ? (
                 <CommunityMarketplaceHub 
                   user={user} 
@@ -1122,8 +1073,6 @@ function AppContent() {
                   escrowTransactions={escrowTransactions}
                   setEscrowTransactions={setEscrowTransactions}
                 />
-<<<<<<< HEAD
-=======
               ) : currentTab === 'widget-cms' ? (
                 <WidgetLibraryCMS />
               ) : currentTab === 'intelligence-workspace' ? (
@@ -1161,15 +1110,12 @@ function AppContent() {
                 <EventCenter />
               ) : currentTab === 'channel-center' ? (
                 <ChannelCenter />
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
               ) : currentTab === 'ados' ? (
                 <AdOSPortal
                   user={user}
                   token={effectiveToken}
                   onNavigateToCategory={handleTabChange}
                 />
-<<<<<<< HEAD
-=======
               ) : currentTab === 'seo-hub' ? (
                 <SEOHub onNavigateToCategory={handleTabChange} />
               ) : currentTab === 'mediaos' ? (
@@ -1182,7 +1128,7 @@ function AppContent() {
                 <GeoIntelligenceHub 
                   onNavigateToArticle={(slug) => handleNavigate(slug, 'article')}
                 />
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
+
               ) : (
                 <Homepage
                   user={user}

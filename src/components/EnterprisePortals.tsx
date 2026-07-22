@@ -8,6 +8,7 @@ import {
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { motion, AnimatePresence } from 'motion/react';
 import AIAnalyticsDashboard from './AIAnalyticsDashboard';
+import { MaintenanceView } from './MaintenanceView';
 
 // ==========================================
 // 1. REPORTER PORTAL
@@ -410,6 +411,8 @@ export function AdvertiserPortal({ user }: PortalProps) {
 // 4. SALES PORTAL
 // ==========================================
 export function SalesPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Sales Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'lead' | 'crm' | 'proposal' | 'quotation' | 'contract' | 'campaign' | 'commission' | 'target' | 'performance'>('lead');
 
   return (
@@ -519,6 +522,8 @@ export function SalesPortal({ user }: PortalProps) {
 // 5. BUSINESS PORTAL
 // ==========================================
 export function BusinessPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Business Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'company' | 'brand' | 'promotion' | 'sponsored' | 'directory' | 'profile' | 'analytics' | 'invoices'>('company');
 
   return (
@@ -612,6 +617,8 @@ export function BusinessPortal({ user }: PortalProps) {
 // 6. RESEARCH PORTAL
 // ==========================================
 export function ResearchPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Research Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'research' | 'dataset' | 'downloads' | 'reports' | 'analytics' | 'visualization'>('research');
 
   return (
@@ -690,6 +697,8 @@ export function ResearchPortal({ user }: PortalProps) {
 // 7. MONITORING PORTAL
 // ==========================================
 export function MonitoringPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Monitoring Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'dashboard' | 'news' | 'brand' | 'keyword' | 'entity' | 'geo' | 'sentiment' | 'alerts' | 'competitor'>('dashboard');
 
   return (
@@ -802,6 +811,8 @@ export function MonitoringPortal({ user }: PortalProps) {
 // 8. CMS PORTAL
 // ==========================================
 export function CMSPortal({ user, token, onNavigateToArticle }: PortalProps) {
+  return <MaintenanceView featureName="CMS Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'dashboard' | 'content' | 'media' | 'categories' | 'tags' | 'users' | 'roles' | 'workflow' | 'settings'>('dashboard');
 
   return (
@@ -918,6 +929,8 @@ export function CMSPortal({ user, token, onNavigateToArticle }: PortalProps) {
 // 9. SUPER ADMIN PORTAL
 // ==========================================
 export function SuperAdminPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Super Admin Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'roles' | 'permissions' | 'portal' | 'navigation' | 'routes' | 'api' | 'settings' | 'logs' | 'security' | 'backup' | 'restore' | 'audit' | 'ai' | 'integrations' | 'license'>('dashboard');
 
   return (
@@ -1086,6 +1099,8 @@ export function SuperAdminPortal({ user }: PortalProps) {
 // 10. DEVELOPER PORTAL
 // ==========================================
 export function DeveloperPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Developer Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'dashboard' | 'endpoints' | 'logs' | 'db_browser' | 'environment' | 'metrics'>('dashboard');
   const [selectedEndpoint, setSelectedEndpoint] = useState<string>('/api/v1/articles');
   const [customParam, setCustomParam] = useState<string>('limit=10&sort=desc');
@@ -1724,6 +1739,8 @@ export function DeveloperPortal({ user }: PortalProps) {
 // 11. FINANCE PORTAL (REVENUEOS 23 MODEL BISNIS)
 // ==========================================
 export function FinancePortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Finance Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'overview' | 'monetization_23' | 'invoices' | 'payouts' | 'taxation' | 'audits'>('overview');
   const [modelSearch, setModelSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -2280,6 +2297,8 @@ export function FinancePortal({ user }: PortalProps) {
 // 12. GOVERNMENT PORTAL
 // ==========================================
 export function GovernmentPortal({ user }: PortalProps) {
+  return <MaintenanceView featureName="Government Portal" />;
+  // eslint-disable-next-line no-unreachable
   const [activeTab, setActiveTab] = useState<'dashboard' | 'press_room' | 'hoax_buster' | 'policy_check' | 'geospatial'>('dashboard');
   
   const [pressReleases, setPressReleases] = useState([

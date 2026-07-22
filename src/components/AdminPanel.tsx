@@ -87,7 +87,6 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
   // Feedback notifications
   const [feedback, setFeedback] = useState({ message: '', type: '' });
 
-<<<<<<< HEAD
   // Ad CRUD states
   const [adFormType, setAdFormType] = useState<'none' | 'campaign' | 'creative'>('none');
   const [campName, setCampName] = useState('');
@@ -107,8 +106,6 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
   const [adSubmitting, setAdSubmitting] = useState(false);
   const [adFormError, setAdFormError] = useState('');
 
-=======
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
   // ==========================================
   // SEED DATABASE METRICS & EXPLORER STATES
   // ==========================================
@@ -582,7 +579,6 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
     }
   };
 
-<<<<<<< HEAD
   // Create Campaign handler
   const handleCreateCampaign = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -711,8 +707,6 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
     }
   };
 
-=======
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
   const fetchAuditData = async () => {
     try {
       const res = await fetch('/api/v1/admin/audit-logs', {
@@ -1450,11 +1444,7 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
           SUBTAB 3: MONETIZATION & CAMPAIGN STATS
           ================================================== */}
       {activeSubTab === 'ads' && (
-<<<<<<< HEAD
         <div className="space-y-6 text-left font-sans">
-=======
-        <div className="space-y-6 text-left">
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
           <div className="bg-teal-900 text-teal-50 p-6 rounded-2xl border border-teal-850 space-y-2">
             <h3 className="font-display font-extrabold text-lg text-teal-300">Monetization Campaign Performance Center</h3>
             <p className="text-xs text-teal-100 max-w-2xl leading-relaxed">
@@ -1462,7 +1452,6 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
             </p>
           </div>
 
-<<<<<<< HEAD
           {/* CRUD Actions Panel */}
           <div className="flex gap-3">
             <button
@@ -1752,61 +1741,6 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
               })}
             </div>
           )}
-=======
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {campaigns.map((cp) => {
-              // Find related creatives to accumulate statistics
-              const relatedCreatives = creatives.filter(cr => cr.campaignId === cp.id);
-              const totalImpressions = relatedCreatives.reduce((acc, curr) => acc + (curr.impressions || 0), 0);
-              const totalClicks = relatedCreatives.reduce((acc, curr) => acc + (curr.clicks || 0), 0);
-              const ctr = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) : '0.00';
-
-              return (
-                <div key={cp.id} className="bg-white dark:bg-[#001f42] border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-sm space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-2.5">
-                    <div>
-                      <h4 className="font-display font-bold text-sm text-slate-900 dark:text-white">{cp.name}</h4>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 block font-medium">Sponsor: {cp.sponsorName}</span>
-                    </div>
-                    <span className="text-[9px] font-mono bg-teal-50 dark:bg-teal-950/30 text-teal-700 dark:text-teal-400 font-bold px-1.5 py-0.2 rounded uppercase">
-                      ACTIVE
-                    </span>
-                  </div>
-
-                  {/* Stats counts */}
-                  <div className="grid grid-cols-3 gap-2.5 text-center">
-                    <div className="bg-slate-50 dark:bg-[#001733] border border-slate-200/55 dark:border-white/10 rounded-xl p-2">
-                      <span className="text-[8px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase">Impressions</span>
-                      <div className="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">{totalImpressions}</div>
-                    </div>
-                    <div className="bg-slate-50 dark:bg-[#001733] border border-slate-200/55 dark:border-white/10 rounded-xl p-2">
-                      <span className="text-[8px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase">Clicks</span>
-                      <div className="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">{totalClicks}</div>
-                    </div>
-                    <div className="bg-slate-50 dark:bg-[#001733] border border-slate-200/55 dark:border-white/10 rounded-xl p-2">
-                      <span className="text-[8px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase">CTR Ratio</span>
-                      <div className="text-lg font-mono font-bold text-teal-600 dark:text-teal-400 mt-1">{ctr}%</div>
-                    </div>
-                  </div>
-
-                  {/* Target Geo */}
-                  <div className="text-xs text-slate-600 dark:text-slate-400 flex flex-wrap items-center gap-1 pt-1">
-                    <span className="font-semibold">Target Lokasi:</span>
-                    {cp.targetLocations && cp.targetLocations.length ? (
-                      cp.targetLocations.map((loc: string) => (
-                        <span key={loc} className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-[9px] font-bold px-1.5 py-0.2 rounded uppercase">
-                          {loc}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-slate-400 dark:text-slate-500 font-medium italic">Global / Nasional</span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
->>>>>>> d69127ea91dd17b633d1e59a067eb0de1136ebae
         </div>
       )}
 
