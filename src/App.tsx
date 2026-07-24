@@ -1186,35 +1186,6 @@ function AppContent() {
                         {adminAuthLoading ? 'Memverifikasi...' : 'Autentikasi Redaksi ➜'}
                       </button>
                     </form>
-
-                    <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-3">
-                      <div className="text-[9px] font-mono font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center">
-                        Profil Evaluasi Cepat
-                      </div>
-                      <div className="grid grid-cols-3 gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => handleAdminQuickLogin('admin@infobos.com', 'admin123')}
-                          className="p-2 bg-slate-50 dark:bg-white/5 hover:bg-[#FFD700]/10 hover:text-[#FFD700] hover:border-[#FFD700]/30 rounded-xl border border-slate-200 dark:border-white/5 text-[9px] font-mono font-extrabold text-slate-600 dark:text-slate-300 text-center transition cursor-pointer"
-                        >
-                          Super Admin
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleAdminQuickLogin('editor@infobos.com', 'editor123')}
-                          className="p-2 bg-slate-50 dark:bg-white/5 hover:bg-[#FFD700]/10 hover:text-[#FFD700] hover:border-[#FFD700]/30 rounded-xl border border-slate-200 dark:border-white/5 text-[9px] font-mono font-extrabold text-slate-600 dark:text-slate-300 text-center transition cursor-pointer"
-                        >
-                          Managing Editor
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleAdminQuickLogin('reporter@infobos.com', 'reporter123')}
-                          className="p-2 bg-slate-50 dark:bg-white/5 hover:bg-[#FFD700]/10 hover:text-[#FFD700] hover:border-[#FFD700]/30 rounded-xl border border-slate-200 dark:border-white/5 text-[9px] font-mono font-extrabold text-slate-600 dark:text-slate-300 text-center transition cursor-pointer"
-                        >
-                          Reporter
-                        </button>
-                      </div>
-                    </div>
                   </motion.div>
                 </div>
               )

@@ -418,7 +418,11 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
     if (activeSubTab !== 'database') return;
     
     // Fetch Metrics
-    fetch('/api/v1/virtual/metrics')
+    fetch('/api/v1/virtual/metrics', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -428,7 +432,11 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
       });
 
     // Fetch Relationships
-    fetch('/api/v1/virtual/relationships')
+    fetch('/api/v1/virtual/relationships', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -441,7 +449,11 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
   useEffect(() => {
     if (activeSubTab !== 'database') return;
     setExplorerLoading(true);
-    fetch(`/api/v1/virtual/explorer?table=${explorerTable}&page=${explorerPage}&limit=10&search=${encodeURIComponent(explorerSearch)}`)
+    fetch(`/api/v1/virtual/explorer?table=${explorerTable}&page=${explorerPage}&limit=10&search=${encodeURIComponent(explorerSearch)}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -456,7 +468,11 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
   // Fetch Analytics reports
   useEffect(() => {
     if (activeSubTab !== 'database') return;
-    fetch(`/api/v1/virtual/analytics?range=${analyticsRange}`)
+    fetch(`/api/v1/virtual/analytics?range=${analyticsRange}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
         setAnalyticsData(data);
@@ -467,7 +483,11 @@ export default function AdminPanel({ user, token, onNavigateToArticle }: AdminPa
   const handleTriggerScenario = (id: string) => {
     setScenarioLoading(true);
     setActiveScenarioId(id);
-    fetch(`/api/v1/virtual/scenario?id=${id}`)
+    fetch(`/api/v1/virtual/scenario?id=${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (data.success) {

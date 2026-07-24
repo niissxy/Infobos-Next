@@ -167,7 +167,7 @@ export const LiveFeedDashboard: React.FC<LiveFeedDashboardProps> = ({ user, onSe
             const localArticles = JSON.parse(localStr);
             if (Array.isArray(localArticles)) {
               const existingIds = new Set(list.map((item: any) => item.id));
-              const uniqueLocal = localArticles.filter((item: any) => !existingIds.has(item.id));
+              const uniqueLocal = localArticles.filter((item: any) => !existingIds.has(item.id) && item.status === 'published');
               list = [...uniqueLocal, ...list];
             }
           }

@@ -2158,7 +2158,7 @@ PROMPT PENGGUNA: "${userPrompt}"`;
     try {
       const contents = db.getContents().filter(c => c.status === 'published');
       const categories = db.getCategories();
-      const domain = 'https://infobos.com';
+      const domain = 'https://infobos.news';
 
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
       xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
@@ -2208,7 +2208,7 @@ PROMPT PENGGUNA: "${userPrompt}"`;
     try {
       const contents = db.getContents().filter(c => c.status === 'published');
       const categories = db.getCategories();
-      const domain = 'https://infobos.com';
+      const domain = 'https://infobos.news';
 
       const sorted = [...contents].sort((a, b) => 
         new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime()
@@ -2260,7 +2260,7 @@ PROMPT PENGGUNA: "${userPrompt}"`;
     try {
       const contents = db.getContents().filter(c => c.status === 'published');
       const categories = db.getCategories();
-      const domain = 'https://infobos.com';
+      const domain = 'https://infobos.news';
 
       const sorted = [...contents].sort((a, b) => 
         new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime()
@@ -2305,7 +2305,7 @@ PROMPT PENGGUNA: "${userPrompt}"`;
   app.get('/category-sitemap.xml', (req, res) => {
     try {
       const categories = db.getCategories();
-      const domain = 'https://infobos.com';
+      const domain = 'https://infobos.news';
 
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
       xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
@@ -2333,7 +2333,7 @@ PROMPT PENGGUNA: "${userPrompt}"`;
     try {
       const contents = db.getContents().filter(c => c.status === 'published' && c.heroImageUrl);
       const categories = db.getCategories();
-      const domain = 'https://infobos.com';
+      const domain = 'https://infobos.news';
 
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
       xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n`;
@@ -2365,7 +2365,7 @@ PROMPT PENGGUNA: "${userPrompt}"`;
     try {
       const contents = db.getContents().filter(c => c.status === 'published');
       const categories = db.getCategories();
-      const domain = 'https://infobos.com';
+      const domain = 'https://infobos.news';
 
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
       xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n`;

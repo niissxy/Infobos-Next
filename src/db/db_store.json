@@ -4,28 +4,8 @@
       "id": "usr-admin",
       "email": "admin@infobos.com",
       "passwordHash": "admin123",
-      "fullName": "Ahmad Dahlan",
+      "fullName": "Admin Infobos",
       "role": "super_admin",
-      "status": "active",
-      "createdAt": "2026-06-30T12:44:55.351Z",
-      "updatedAt": "2026-06-30T12:44:55.351Z"
-    },
-    {
-      "id": "usr-editor",
-      "email": "editor@infobos.com",
-      "passwordHash": "editor123",
-      "fullName": "Siti Rahma",
-      "role": "managing_editor",
-      "status": "active",
-      "createdAt": "2026-06-30T12:44:55.351Z",
-      "updatedAt": "2026-06-30T12:44:55.351Z"
-    },
-    {
-      "id": "usr-reporter",
-      "email": "reporter@infobos.com",
-      "passwordHash": "reporter123",
-      "fullName": "Budi Santoso",
-      "role": "reporter",
       "status": "active",
       "createdAt": "2026-06-30T12:44:55.351Z",
       "updatedAt": "2026-06-30T12:44:55.351Z"

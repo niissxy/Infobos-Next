@@ -329,7 +329,7 @@ export default function SEOHub({ onNavigateToCategory }: SEOHubProps) {
           const localArticles = JSON.parse(localStr);
           if (Array.isArray(localArticles)) {
             const existingIds = new Set(list.map((c: any) => c.id));
-            const uniqueLocal = localArticles.filter((c: any) => !existingIds.has(c.id));
+            const uniqueLocal = localArticles.filter((c: any) => !existingIds.has(c.id) && c.status === 'published');
             list = [...uniqueLocal, ...list];
           }
         }

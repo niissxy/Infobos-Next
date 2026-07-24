@@ -664,7 +664,7 @@ export default function Homepage({
             const localArticles = JSON.parse(localStr);
             if (Array.isArray(localArticles)) {
               const existingIds = new Set(fetched.map((a: any) => a.id));
-              const uniqueLocal = localArticles.filter((a: any) => !existingIds.has(a.id));
+              const uniqueLocal = localArticles.filter((a: any) => !existingIds.has(a.id) && a.status === 'published');
               
               let filteredLocal = uniqueLocal;
               if (categorySlug && categorySlug !== 'home') {
@@ -1146,9 +1146,9 @@ export default function Homepage({
                 <div className="pt-3 border-t border-slate-100 dark:border-white/10 mt-4 flex items-center justify-between text-[11px]">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 border dark:border-white/10 flex items-center justify-center font-bold font-mono text-[#002B5B] dark:text-slate-100">
-                      {heroArticle.authorName[0]}
+                      {(heroArticle.authorName || 'R')[0]}
                     </div>
-                    <span className="font-bold text-slate-700 dark:text-slate-300">{heroArticle.authorName}</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-300">{heroArticle.authorName || 'Redaksi INFOBOS'}</span>
                   </div>
                   <div className="text-slate-400 font-mono flex items-center gap-1">
                     <Eye className="h-3 w-3" />
